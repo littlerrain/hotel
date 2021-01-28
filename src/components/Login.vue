@@ -4,13 +4,13 @@
       <h3 class="title">酒店管理系统后台登录</h3>
       <el-form-item prop="username">
         <span class="svg-container">
-          <svg-icon icon-class="user"></svg-icon>
+          <i class="el-icon-user"></i>
         </span>
-        <el-input v-model="loginForm.username" name="username" type="text" auto-complete="on" placeholder="请输入用户名" />
+        <el-input v-model="loginForm.username" placeholder="请输入账号"></el-input>
       </el-form-item>
       <el-form-item prop="password">
         <span class="svg-container">
-          <svg-icon icon-class="password" />
+          <i class="el-icon-lock"></i>
         </span>
         <el-input
           :type="pwdType"
@@ -20,11 +20,11 @@
           placeholder="请输入密码"
           @keyup.enter.native="handleLogin" />
         <span class="show-pwd" @click="showPwd">
-          <svg-icon icon-class="eye" />
+          <i class="el-icon-view" ></i>
         </span>
       </el-form-item>
       <el-form-item>
-        <el-button :loading="loading" type="primary" style="width:100%;" @click.native.prevent="login">
+        <el-button :loading="loading" type="primary" style="width:100%" @click.native.prevent="login">
           登 录
         </el-button>
       </el-form-item>
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import { isvalidUsername } from '@/utils/test.js'
+import { isvalidUsername } from '@/utils/validate.js'
 export default {
   name: 'Login',
   data () {
@@ -69,11 +69,41 @@ export default {
   },
   methods : {
     showPwd() {
-      if (this.pwdType === 'password') {
-        this.pwdType = ''
-      } else {
-        this.pwdType = 'password'
-      }
+      this.pwdType === 'password' ? this.pwdType = '' : this.pwdType = 'password';
+      let e = document.getElementsByClassName('el-icon-view')[0];
+      this.pwdType == '' ? e.setAttribute('style', 'color: #409EFF') : e.setAttribute('style', 'color: #c0c4cc');
+    },
+    login() {
+      console.log(this.$refs.loginForm.validate);
+      this.$refs.loginForm.validate(valid => {
+        if (valid) {
+          const username = this.loginForm.username.trim()
+          this.loading = true
+          // login(this.loginForm).then(response => {
+          //     const res = response;
+          //   if (res.code === 1000){
+          //     Cookies.set('admin_name', username)
+          //       Cookies.set('session_id', res.data.sessionId)
+          //       Cookies.set('admin_id', res.data.userId)
+          //       Cookies.set('role', res.data.role)
+          //     this.$router.push({ path: this.redirect || '/' })
+          //   }
+          //   else{
+          //     this.$message.warning("用户名或密码错误！请检查后再试")
+          //   }
+          // }).finally(() => {
+          //   this.loading = false
+          // })
+          alert("success");
+          console.log(this.loginForm)
+          this.loading = false
+          this.$router.push("/home");
+        } else {
+          console.log('error submit!!')
+        }
+        this.loading = false
+      })
+
     },
   }
 }
