@@ -74,7 +74,7 @@ export default {
       this.pwdType == '' ? e.setAttribute('style', 'color: #409EFF') : e.setAttribute('style', 'color: #c0c4cc');
     },
     login() {
-      console.log(this.$refs.loginForm.validate);
+      let _this = this
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           const username = this.loginForm.username.trim()
@@ -94,8 +94,7 @@ export default {
           // }).finally(() => {
           //   this.loading = false
           // })
-          alert("success");
-          console.log(this.loginForm)
+          _this.$message.success("登录成功");
           this.loading = false
           this.$router.push("/home");
         } else {
