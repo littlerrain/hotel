@@ -1,17 +1,11 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <meta charset="utf-8">
-    <title>广州某某大酒店</title>
-    <!--引入 element-ui 的样式，-->
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-    <!-- 必须先引入vue，  后使用element-ui -->
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
-    <!-- 引入element 的组件库-->
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>广州和谐大酒店</title>
     <style>
-        html,
+      html,
         body,
         div,
         span,
@@ -100,197 +94,20 @@
             vertical-align: baseline;
         }
 
-        body {
+      body {
             color: #666;
             background-color: #f8f8f8;
             overflow: scroll;
+            transform: scale(1.0);
         }
-
         ul,
         li {
             list-style: none;
         }
-
-        .title {
-            font-weight: 700;
-            float: left;
-            color: #333;
-            font-size: 26px;
-        }
-
-        .hotel-type {
-            text-indent: 20px;
-            height: 37px;
-            line-height: 37px;
-        }
-
-        .pull-left {
-            float: left;
-        }
-
-        .fc9 {
-            color: #999;
-        }
-
-        .fs12 {
-            font-size: 12px;
-        }
-
-        .relative {
-            position: relative;
-        }
-
-        .clear:after {
-            clear: both;
-            content: "";
-            display: block;
-            width: 0;
-            height: 0;
-            visibility: hidden;
-        }
-
-        .mb10 {
-            margin-bottom: 10px;
-        }
-
-        .fen {
-            border: 2px dotted #f90;
-            border-radius: 50%;
-            height: 87px;
-            width: 87px;
-            float: left;
-            line-height: 87px;
-            text-align: center;
-            color: #f90;
-            margin: 12px 0 0;
-        }
-
-        .li2 {
-            margin: 20px;
-            color: #666;
-            font-size: 14px;
-        }
-
-        .li3 {
-            width: 60px;
-            height: 46px;
-            margin: 5px 10px 0;
-            float: left;
-            text-align: center;
-        }
-
-        .nav-tabs {
-            height: 63px;
-            box-shadow: none;
-            transition: none;
-            border-bottom: 1px solid #e5e5e5;
-            margin: 0 20px;
-        }
-
-        .nav-tabs li {
-            float: left;
-            text-align: center;
-            margin: 0 25px;
-        }
-
-        .nav-tabs li a {
-            position: relative;
-            display: block;
-            color: #666;
-            text-decoration: none;
-            font-size: 16px;
-            line-height: 62px;
-        }
-
-        .nav-tabs li.current a {
-            color: #ffc300;
-            text-decoration: none;
-            border-bottom: 2px solid #ffc300;
-        }
-
-        .nav-tabs li.current a {
-            color: #ffc300;
-            text-decoration: none;
-            border-bottom: 2px solid #ffc300;
-        }
-
-        .clearfix:before,
-        .clearfix:after {
-            display: table;
-            content: "";
-        }
     </style>
-</head>
-
-<body>
-    <div class="header">
-        <div class="relative clear">
-            <span class="title">广州某某大酒店</span>
-            <div class="hotel-type pull-left">
-                <span class="fs12 fc9">豪华型</span>
-            </div>
-        </div>
-        <div class="fs12 mt6 mb10">
-            <span style="color: #ffc300;">[广东财经大学]</span>
-            <span>广东省广州市海珠区中约曾园八十八巷88</span>
-        </div>
-    </div>
-    <div style="position:relative;height:380px;max-width:1190px;">
-        <div style="width:63.2%;height:100%;float:left;">
-            <div style="width:100%;min-height: 270px;max-width: 752px;overflow: hidden;">
-                <img src="1.jpg" alt="" width="1000" height="380">
-            </div>
-        </div>
-        <ul
-            style="height:100%;position: relative;width: 35.6%;background: #fff;border: 1px solid #e5e5e5;border-radius: 4px;float: right;">
-            <li style="height: 115px;margin: 0 20px;border-bottom: 1px solid #e5e5e5;list-style:none;">
-                <div class="fen">
-                    <span style="font-size:34px;font-weight:500;padding-right:2px;">4.7</span>分
-                </div>
-                <div style="margin-left: 11px;float: left;line-height: 115px;color: #f90;font-size: 16px;">很好</div>
-            </li>
-            <li class="li2">
-                <div
-                    style="color: #666;line-height: 20px;margin-bottom: 10px;overflow: hidden;text-overflow: ellipsis;word-break: break-all;white-space: nowrap;">
-                    <span>2021年开业 </span>
-                    <span>2021年装修 </span>
-                </div>
-                <div style="color: #666;margin-bottom: 10px;">电话：666-8888888</div>
-                <ul style="overflow: hidden;white-space: nowrap;height: 53px;">
-                    <li class="li3">
-                        <div><i class="el-icon-success"></i></div>
-                        <div style="color:#999;font-size:12px">无线上网</div>
-                    </li>
-                    <li class="li3">
-                        <div><i class="el-icon-user"></i></div>
-                        <div style="color:#999;font-size:12px">免费停车</div>
-                    </li>
-                    <li class="li3">
-                        <div><i class="el-icon-phone"></i></div>
-                        <div style="color:#999;font-size:12px">餐厅</div>
-                    </li>
-                    <li class="li3">
-                        <div><i class="el-icon-more"></i></div>
-                        <div style="color:#999;font-size:12px">接送服务</div>
-                    </li>
-                    <li class="li3">
-                        <div><i class="el-icon-plus"></i></div>
-                        <div style="color:#999;font-size:12px">行李寄存</div>
-                    </li>
-                    <li class="li3">
-                        <div><i class="el-icon-error"></i></div>
-                        <div style="color:#999;font-size:12px">租车服务</div>
-                    </li>
-                </ul>
-            </li>
-        </ul>
-    </div>
-    <div style="margin-top: 10px;background: #fff;border: 1px solid #e5e5e5;border-radius: 4px;">
-        <ul class="nav-tabs clearfix">
-            <li class="current" style="margin-left:0"><a href="#deal">房型预订</a></li>
-            <li><a href="#info">酒店信息</a></li>
-        </ul>
-    </div>
-</body>
-
+  </head>
+  <body>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+  </body>
 </html>
