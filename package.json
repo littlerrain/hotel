@@ -12,6 +12,7 @@
   "dependencies": {
     "echarts": "^5.0.0",
     "element-ui": "^2.15.1",
+    "less-loader": "^8.0.0",
     "vue": "^2.5.2",
     "vue-echarts": "^5.0.0-beta.0",
     "vue-schart": "^2.0.0"

@@ -1,8 +1,9 @@
 <template>
+  <div style="margin-left:30px;">
   <div style="width:990px;height:443px;">
     <div class="header">
       <div class="clear" style="position:relative;">
-        <span class="title">广州某某大酒店</span>
+        <span class="title">广州和谐大酒店</span>
         <div class="hotel-type" style="float:left;">
           <span style="color: #999;font-size: 12px;">豪华型</span>
         </div>
@@ -61,11 +62,22 @@
       </ul>
     </div>
   </div>
+  <HelloWorld />
+  </div>
 </template>
 
 <script>
+import HelloWorld from "./components/HelloWorld"
 export default {
     name: 'app',
+    data() {
+            return {
+
+            };
+        },
+        components: {
+            HelloWorld,
+        },
 }
 </script>
 
