@@ -9,6 +9,10 @@ import ElementUI from 'element-ui' //ui组件
 import '../node_modules/element-ui/lib/theme-chalk/index.css'
 Vue.use(ElementUI);
 
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
+Vue.use(VueAxios,axios);
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
