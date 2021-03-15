@@ -97,6 +97,7 @@
 <script>
 import Footer from "./Footer";
 export default {
+  props:["message"],
   data() {
     return {
       pickerOptions: {
@@ -109,8 +110,8 @@ export default {
       },
       value1: "",
       days: 0,
-      showFlag: false,
-      showColor: true,
+      showFlag: false,//日期的切换
+      showColor: true,//地址的切换
     };
   },
 
@@ -151,7 +152,14 @@ export default {
       }
     },
     bookIn(){
-      alert('暂时无法预订')
+      if(this.$props.message){
+        //跳转到订单页面，并获取到当前的用户
+      }else{
+        //提示请先登录，然后再跳转到登录界面
+        this.$message({message: '请先登录',type: 'warning'});
+        this.$router.push('/login')
+
+      }
     }
   }
 };
