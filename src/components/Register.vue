@@ -3,10 +3,16 @@
     <el-form ref="registerForm" :model="form" :rules="rules" label-width="80px" class="login-box">
       <h3 class="login-title">欢迎注册</h3>
       <el-form-item label="账号" prop="Tel">
-        <el-input type="text" placeholder="请输入手机号" v-model="form.Tel"/>
+        <el-input type="text" placeholder="请输入手机号" v-model="form.Tel" />
       </el-form-item>
       <el-form-item label="用户名" prop="UserName">
-        <el-input type="text" placeholder="请输入用户名" v-model="form.UserName"/>
+        <el-input type="text" placeholder="请输入用户名" v-model="form.UserName" />
+      </el-form-item>
+      <el-form-item label="性别" prop="Sex">
+        <el-select v-model="form.Sex" placeholder="请选择性别">
+          <el-option label="男" value=1></el-option>
+          <el-option label="女" value=0></el-option>
+        </el-select>
       </el-form-item>
       <el-form-item label="密码" prop="Password">
         <el-input type="password" placeholder="请输入密码" v-model="form.Password" />
@@ -28,21 +34,38 @@
 <script>
 export default {
   data() {
+    //二次密码要一致
+    var validatePass2 = (rule, value, callback) => {
+      if (value === "") {
+        callback(new Error("请再次输入密码"));
+      } else if (value !== this.form.Password) {
+        callback(new Error("两次输入密码不一致!"));
+      } else {
+        callback();
+      }
+    };
     return {
       form: {
         Tel: "",
+        Sex: null,
         Password: "",
         Password2: "",
         PId: "",
-        UserName: "",
+        UserName: ""
       },
       // 表单验证，需要在 el-form-item 元素中增加 prop 属性
       rules: {
         Tel: [{ required: true, message: "账号不可为空", trigger: "blur" }],
-        Password: [{ required: true, message: "密码不可为空", trigger: "blur" }],
-        Password2: [{ required: true, message: "确认密码不可为空", trigger: "blur" }],
-        PId: [{ required: true, message: "身份证号码不可为空", trigger: "blur" }],
-        UserName: [{ required: true, message: "身份证号码不可为空", trigger: "blur" }],
+        Password: [
+          { required: true, message: "密码不可为空", trigger: "blur" }
+        ],
+        Password2: [{ validator: validatePass2, trigger: "blur" }],
+        PId: [
+          { required: true, message: "身份证号码不可为空", trigger: "blur" }
+        ],
+        UserName: [
+          { required: true, message: "身份证号码不可为空", trigger: "blur" }
+        ]
       }
     };
   },
@@ -51,6 +74,10 @@ export default {
       var _this = this;
       // 为表单绑定验证功能
       this.$refs[formName].validate(valid => {
+        if(!_this.form.Sex){
+          _this.$message.error("没有选择性别，请选择");
+          return;
+        }
         if (valid) {
           // 使用 vue-router 路由到指定页面，该方式称之为编程式导航
           console.log("注册了", this.form);
@@ -101,9 +128,9 @@ export default {
 }
 
 .el-form-item__label {
-  width:100px !important;
+  width: 100px !important;
 }
-.el-form-item__content{
-    margin-left: 100px !important;
+.el-form-item__content {
+  margin-left: 100px !important;
 }
 </style>

@@ -10,33 +10,17 @@
             <a href="#info">酒店信息</a>
           </li>
           <div v-show="showFlag" style="vertical-align: middle;margin-top: 5px;height: 55px;float: right;margin-right:70px;">
-          <el-date-picker
-            v-model="value1"
-            type="daterange"
-            range-separator="至"
-            start-placeholder="开始日期"
-            end-placeholder="结束日期"
-            :picker-options="pickerOptions"
-            @change="toDays"
-          ></el-date-picker>
-          <span>共{{days}}晚</span>
+            <el-date-picker v-model="value1" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions" @change="toDays"></el-date-picker>
+            <span>共{{days}}晚</span>
           </div>
         </div>
       </ul>
     </div>
-    <el-date-picker
-      v-model="value1"
-      type="daterange"
-      range-separator="至"
-      start-placeholder="开始日期"
-      end-placeholder="结束日期"
-      :picker-options="pickerOptions"
-      @change="toDays"
-    ></el-date-picker>
+    <el-date-picker v-model="value1" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions" @change="toDays"></el-date-picker>
     <span>共{{days}}晚</span>
     <div style="height:500px;margin: 0 20px;">
       <ul class="deal-table">
-        <li class="showli clear">
+        <li class="showli clear" v-for="(item,index) in liData" :key = index>
           <div class="liDiv1">
             <img src="https://p0.meituan.net/175.0/tdchotel/62c228d2c65086954b8ab46af8fac8a51029880.jpg" src2="http://p0.meituan.net/175.0/tdchotel/62c228d2c65086954b8ab46af8fac8a51029880.jpg" width="128px" height="80px" style="border-radius: 2px;">
           </div>
@@ -58,33 +42,25 @@
       <div class="clearfix" style="border-bottom: none;line-height: 20px;font-size: 12px;color: #666;">
         <div class="table_content clear">
           <dt class="poi-hotelinfo-title">联系方式</dt>
-          <dd
-            style="position: relative;min-height: 1px;padding-right: 18px;float: left;max-width:85%;"
-          >
+          <dd style="position: relative;min-height: 1px;padding-right: 18px;float: left;max-width:85%;">
             <span>666-8888888</span>
           </dd>
         </div>
         <div class="table_content clear">
           <dt class="poi-hotelinfo-title">酒店信息</dt>
-          <dd
-            style="position: relative;min-height: 1px;padding-right: 18px;float: left;max-width:85%;"
-          >
+          <dd style="position: relative;min-height: 1px;padding-right: 18px;float: left;max-width:85%;">
             <span>2021年开业 2021年装修</span>
           </dd>
         </div>
         <div class="table_content clear">
           <dt class="poi-hotelinfo-title">酒店简介</dt>
-          <dd
-            style="position: relative;min-height: 1px;padding-right: 18px;float: left;max-width:85%;"
-          >
+          <dd style="position: relative;min-height: 1px;padding-right: 18px;float: left;max-width:85%;">
             <span>酒店地处广东财经大学附近，临近既是广东财经大学南门堕落街，举步可至堕落街吃吃喝喝，邻近广州地铁八号线新港东站，短短十分钟即可到达新港东。酒店共占地3000平方米，拥有独特的艺术气息与风情，为宾客带来独特的传统文化及艺术品味及享受，是商旅宾客的下榻选择。酒店拥有各类独特风格的客房与套房，客房内提供网络、进口洗浴用品等，住宿环境优越。酒店致力传承传统的艺术及文化，为宾客带来近乎优质的享受。</span>
           </dd>
         </div>
         <div class="table_content clear">
           <dt class="poi-hotelinfo-title">酒店政策</dt>
-          <dd
-            style="position: relative;min-height: 1px;padding-right: 18px;float: left;max-width:85%;"
-          >
+          <dd style="position: relative;min-height: 1px;padding-right: 18px;float: left;max-width:85%;">
             <span>入住时间: 14:00以后 离店时间: 12:00之前</span>
           </dd>
         </div>
@@ -97,7 +73,7 @@
 <script>
 import Footer from "./Footer";
 export default {
-  props:["message"],
+  props: ["message"],
   data() {
     return {
       pickerOptions: {
@@ -110,13 +86,19 @@ export default {
       },
       value1: "",
       days: 0,
-      showFlag: false,//日期的切换
-      showColor: true,//地址的切换
+      showFlag: false, //日期的切换
+      showColor: true, //地址的切换
+      user: null,
+      liData: null,
     };
   },
 
   mounted() {
     window.addEventListener("scroll", this.handleScroll);
+    if (sessionStorage.getItem("user")) {
+      var test = sessionStorage.getItem("user");
+      this.user = JSON.parse(sessionStorage.getItem("user"));
+    }
   },
 
   components: {
@@ -145,22 +127,50 @@ export default {
       } else {
         this.showFlag = false;
       }
-      if(scrollTop<903){
+      if (scrollTop < 903) {
         this.showColor = true;
-      }else{
+      } else {
         this.showColor = false;
       }
     },
-    bookIn(){
-      if(this.$props.message){
-        //跳转到订单页面，并获取到当前的用户
-      }else{
+    bookIn() {
+      if (this.$props.message) {
+        //加上确认框，数据就对接上了
+        const custom = {};
+        console.log(this.user, this.value1);
+        custom.Name = this.user.UserName;
+        custom.Tel = this.user.Tel;
+        custom.PType = this.user.PType;
+        custom.PId = this.user.PId;
+        custom.Days = this.days;
+        custom.Sex = 1;
+        custom.CType = 1;
+        custom.RoomNum = 1;
+        custom.Indate = this.renderTime(this.value1[0]);//日期格式化
+        custom.Remark = null;
+        console.log(custom);
+        this.$http
+          .post("/addCustomer", custom)
+          .then(function(res) {
+            console.log(res);
+            if (!res.data.length) {
+            } else {
+            }
+          })
+          .catch(error => console.log(error));
+      } else {
         //提示请先登录，然后再跳转到登录界面
-        this.$message({message: '请先登录',type: 'warning'});
-        this.$router.push('/login')
-
+        this.$message({ message: "请先登录", type: "warning" });
+        this.$router.push("/login");
       }
-    }
+    },
+    renderTime(date) {
+      var dates = new Date(date).toJSON();
+      return new Date(+new Date(dates) + 8 * 3600 * 1000)
+        .toISOString()
+        .replace(/T/g, " ")
+        .replace(/\.[\d]{3}Z/, "");
+    },
   }
 };
 </script>
@@ -246,33 +256,33 @@ export default {
 }
 
 .deal-table {
-    width: 100%;
-    max-width: 100%;
-    margin-bottom: 0;
-    border-collapse: collapse;
-    border-spacing: 0;
+  width: 100%;
+  max-width: 100%;
+  margin-bottom: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
 }
 
-.showli{
+.showli {
   padding-top: 30px;
   border-top: 1px solid #e5e5e5;
 }
 
-.liDiv1{
+.liDiv1 {
   float: left;
-  position:relative;
+  position: relative;
 }
-.ulBook{
+.ulBook {
   width: 600px;
-    line-height: 24px;
-    margin-left: 143px;
+  line-height: 24px;
+  margin-left: 143px;
 }
-.bookDiv{
+.bookDiv {
   white-space: nowrap;
-    display: inline-block;
-    width: 100%;
-    overflow: hidden;
-    height: 20px;
-    font-size: 12px;
+  display: inline-block;
+  width: 100%;
+  overflow: hidden;
+  height: 20px;
+  font-size: 12px;
 }
 </style>

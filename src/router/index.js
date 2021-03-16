@@ -25,7 +25,6 @@ const router = new Router({
       name:'register',
       component: Register
     },
-
     {
       path: '/',
       redirect: '/home'
