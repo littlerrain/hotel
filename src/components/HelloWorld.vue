@@ -9,28 +9,58 @@
           <li :class="{current:!showColor}">
             <a href="#info">酒店信息</a>
           </li>
-          <div v-show="showFlag" style="vertical-align: middle;margin-top: 5px;height: 55px;float: right;margin-right:70px;">
-            <el-date-picker v-model="value1" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions" @change="toDays"></el-date-picker>
+          <div
+            v-show="showFlag"
+            style="vertical-align: middle;margin-top: 5px;height: 55px;float: right;margin-right:70px;"
+          >
+            <el-date-picker
+              v-model="value1"
+              type="daterange"
+              range-separator="至"
+              start-placeholder="开始日期"
+              end-placeholder="结束日期"
+              :picker-options="pickerOptions"
+              @change="toDays"
+            ></el-date-picker>
             <span>共{{days}}晚</span>
           </div>
         </div>
       </ul>
     </div>
-    <el-date-picker v-model="value1" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期" :picker-options="pickerOptions" @change="toDays"></el-date-picker>
+    <el-date-picker
+      v-model="value1"
+      type="daterange"
+      range-separator="至"
+      start-placeholder="开始日期"
+      end-placeholder="结束日期"
+      :picker-options="pickerOptions"
+      @change="toDays"
+    ></el-date-picker>
     <span>共{{days}}晚</span>
-    <div style="height:500px;margin: 0 20px;">
+    <div style="margin: 0 20px;">
       <ul class="deal-table">
-        <li class="showli clear" v-for="(item,index) in liData" :key = index>
+        <li class="showli clear" v-for="(item,index) in liData" :key="index">
           <div class="liDiv1">
-            <img src="https://p0.meituan.net/175.0/tdchotel/62c228d2c65086954b8ab46af8fac8a51029880.jpg" src2="http://p0.meituan.net/175.0/tdchotel/62c228d2c65086954b8ab46af8fac8a51029880.jpg" width="128px" height="80px" style="border-radius: 2px;">
+            <img
+              src="https://p0.meituan.net/175.0/tdchotel/62c228d2c65086954b8ab46af8fac8a51029880.jpg"
+              src2="http://p0.meituan.net/175.0/tdchotel/62c228d2c65086954b8ab46af8fac8a51029880.jpg"
+              width="128px"
+              height="80px"
+              style="border-radius: 2px;"
+            />
           </div>
           <div style="float:right;margin-right:100px;border:2px solid #fe8c00">
-            <div style="padding: 5px;float: right;font-weight:300;font-size: 12px;cursor:pointer;color:#fe8c00;" @click="bookIn()">预订房间</div>
+            <div
+              style="padding: 5px;float: right;font-weight:300;font-size: 12px;cursor:pointer;color:#fe8c00;"
+              @click="bookIn(item)"
+            >预订房间</div>
           </div>
           <div class="book-info">
             <ul class="ulBook">
-              <li style="font-weight: 700;display: inline-block;margin-bottom: 15px;color: #333;font-size: 18px;">大床房</li>
-              <div class="bookDiv"> 38-46㎡ 大床 有窗</div>
+              <li
+                style="font-weight: 700;display: inline-block;margin-bottom: 15px;color: #333;font-size: 18px;"
+              >{{item.RoomType}}</li>
+              <div class="bookDiv">{{item.Area}}㎡ 大床 有窗 <span v-if="item.Broadband==='1'">有宽带</span><span v-else>无宽带</span> <span v-if="item.Bed===1">一张床</span><span v-else>两张床</span></div>
               <li class="clear" style="padding-bottom:16px;"></li>
             </ul>
           </div>
@@ -38,29 +68,43 @@
       </ul>
     </div>
     <h2 id="info">酒店信息</h2>
-    <div class="clearfix" style="width: 100%;background:#fff;border: 1px solid #e5e5e5;border-radius: 4px;">
-      <div class="clearfix" style="border-bottom: none;line-height: 20px;font-size: 12px;color: #666;">
+    <div
+      class="clearfix"
+      style="width: 100%;background:#fff;border: 1px solid #e5e5e5;border-radius: 4px;"
+    >
+      <div
+        class="clearfix"
+        style="border-bottom: none;line-height: 20px;font-size: 12px;color: #666;"
+      >
         <div class="table_content clear">
           <dt class="poi-hotelinfo-title">联系方式</dt>
-          <dd style="position: relative;min-height: 1px;padding-right: 18px;float: left;max-width:85%;">
+          <dd
+            style="position: relative;min-height: 1px;padding-right: 18px;float: left;max-width:85%;"
+          >
             <span>666-8888888</span>
           </dd>
         </div>
         <div class="table_content clear">
           <dt class="poi-hotelinfo-title">酒店信息</dt>
-          <dd style="position: relative;min-height: 1px;padding-right: 18px;float: left;max-width:85%;">
+          <dd
+            style="position: relative;min-height: 1px;padding-right: 18px;float: left;max-width:85%;"
+          >
             <span>2021年开业 2021年装修</span>
           </dd>
         </div>
         <div class="table_content clear">
           <dt class="poi-hotelinfo-title">酒店简介</dt>
-          <dd style="position: relative;min-height: 1px;padding-right: 18px;float: left;max-width:85%;">
+          <dd
+            style="position: relative;min-height: 1px;padding-right: 18px;float: left;max-width:85%;"
+          >
             <span>酒店地处广东财经大学附近，临近既是广东财经大学南门堕落街，举步可至堕落街吃吃喝喝，邻近广州地铁八号线新港东站，短短十分钟即可到达新港东。酒店共占地3000平方米，拥有独特的艺术气息与风情，为宾客带来独特的传统文化及艺术品味及享受，是商旅宾客的下榻选择。酒店拥有各类独特风格的客房与套房，客房内提供网络、进口洗浴用品等，住宿环境优越。酒店致力传承传统的艺术及文化，为宾客带来近乎优质的享受。</span>
           </dd>
         </div>
         <div class="table_content clear">
           <dt class="poi-hotelinfo-title">酒店政策</dt>
-          <dd style="position: relative;min-height: 1px;padding-right: 18px;float: left;max-width:85%;">
+          <dd
+            style="position: relative;min-height: 1px;padding-right: 18px;float: left;max-width:85%;"
+          >
             <span>入住时间: 14:00以后 离店时间: 12:00之前</span>
           </dd>
         </div>
@@ -89,16 +133,18 @@ export default {
       showFlag: false, //日期的切换
       showColor: true, //地址的切换
       user: null,
-      liData: null,
+      liData: [],
     };
   },
 
   mounted() {
+    
     window.addEventListener("scroll", this.handleScroll);
     if (sessionStorage.getItem("user")) {
       var test = sessionStorage.getItem("user");
       this.user = JSON.parse(sessionStorage.getItem("user"));
     }
+    
   },
 
   components: {
@@ -106,6 +152,7 @@ export default {
   },
   methods: {
     toDays() {
+      var _this = this;
       var oDate = new Date(); // 获取当前日期时间
       var month = this.value1[0].getMonth() + 1; // 表示当前月份的变量
       var year = oDate.getFullYear(); //通过时间来获取年份
@@ -116,6 +163,18 @@ export default {
       } else {
         this.days = this.value1[1].getDate() - this.value1[0].getDate() + day;
       }
+      this.$http
+      .get("/selectAllEmptyRoom")
+      .then(function(res) {
+        console.log(res.data);
+        if (res.data.length) {
+          _this.liData = res.data;
+        } else {
+        }
+        console.log(_this.liData);
+      })
+      .catch(error => console.log(error));
+      
     },
     handleScroll() {
       var scrollTop =
@@ -133,20 +192,18 @@ export default {
         this.showColor = false;
       }
     },
-    bookIn() {
+    bookIn(item) {
       if (this.$props.message) {
-        //加上确认框，数据就对接上了
         const custom = {};
-        console.log(this.user, this.value1);
         custom.Name = this.user.UserName;
         custom.Tel = this.user.Tel;
         custom.PType = this.user.PType;
         custom.PId = this.user.PId;
         custom.Days = this.days;
-        custom.Sex = 1;
+        custom.Sex = this.user.Sex;
         custom.CType = 1;
-        custom.RoomNum = 1;
-        custom.Indate = this.renderTime(this.value1[0]);//日期格式化
+        custom.RoomNum = item.RoomNum;
+        custom.Indate = this.renderTime(this.value1[0]); //日期格式化
         custom.Remark = null;
         console.log(custom);
         this.$http
@@ -170,7 +227,7 @@ export default {
         .toISOString()
         .replace(/T/g, " ")
         .replace(/\.[\d]{3}Z/, "");
-    },
+    }
   }
 };
 </script>
