@@ -1,108 +1,74 @@
 <template>
-    <div>
-        <div class="crumbs">
-            <el-breadcrumb separator="/">
-                <el-breadcrumb-item>
-                    <i class="el-icon-lx-cascades"></i> 基础表格
-                </el-breadcrumb-item>
-            </el-breadcrumb>
-        </div>
-        <div class="container">
-            <div class="handle-box">
-                <el-button
-                    type="primary"
-                    icon="el-icon-delete"
-                    class="handle-del mr10"
-                    @click="delAllSelection"
-                >批量删除</el-button>
-                <el-select v-model="query.address" placeholder="地址" class="handle-select mr10">
-                    <el-option key="1" label="广东省" value="广东省"></el-option>
-                    <el-option key="2" label="湖南省" value="湖南省"></el-option>
-                </el-select>
-                <el-input v-model="query.name" placeholder="用户名" class="handle-input mr10"></el-input>
-                <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
-            </div>
-            <el-table
-                :data="tableData"
-                border
-                class="table"
-                ref="multipleTable"
-                header-cell-class-name="table-header"
-                @selection-change="handleSelectionChange"
-            >
-                <el-table-column type="selection" width="55" align="center"></el-table-column>
-                <el-table-column prop="id" label="ID" width="55" align="center"></el-table-column>
-                <el-table-column prop="name" label="用户名"></el-table-column>
-                <el-table-column label="账户余额">
-                    <template slot-scope="scope">￥{{scope.row.money}}</template>
-                </el-table-column>
-                <el-table-column label="头像(查看大图)" align="center">
-                    <template slot-scope="scope">
-                        <el-image
-                            class="table-td-thumb"
-                            :src="scope.row.thumb"
-                            :preview-src-list="[scope.row.thumb]"
-                        ></el-image>
-                    </template>
-                </el-table-column>
-                <el-table-column prop="address" label="地址"></el-table-column>
-                <el-table-column label="状态" align="center">
-                    <template slot-scope="scope">
-                        <el-tag
-                            :type="scope.row.state==='成功'?'success':(scope.row.state==='失败'?'danger':'')"
-                        >{{scope.row.state}}</el-tag>
-                    </template>
-                </el-table-column>
-
-                <el-table-column prop="date" label="注册时间"></el-table-column>
-                <el-table-column label="操作" width="180" align="center">
-                    <template slot-scope="scope">
-                        <el-button
-                            type="text"
-                            icon="el-icon-edit"
-                            @click="handleEdit(scope.$index, scope.row)"
-                        >编辑</el-button>
-                        <el-button
-                            type="text"
-                            icon="el-icon-delete"
-                            class="red"
-                            @click="handleDelete(scope.$index, scope.row)"
-                        >删除</el-button>
-                    </template>
-                </el-table-column>
-            </el-table>
-            <div class="pagination">
-                <el-pagination
-                    background
-                    layout="total, prev, pager, next"
-                    :current-page="query.pageIndex"
-                    :page-size="query.pageSize"
-                    :total="pageTotal"
-                    @current-change="handlePageChange"
-                ></el-pagination>
-            </div>
-        </div>
-
-        <!-- 编辑弹出框 -->
-        <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
-            <el-form ref="form" :model="form" label-width="70px">
-                <el-form-item label="用户名">
-                    <el-input v-model="form.name"></el-input>
-                </el-form-item>
-                <el-form-item label="地址">
-                    <el-input v-model="form.address"></el-input>
-                </el-form-item>
-            </el-form>
-            <span slot="footer" class="dialog-footer">
-                <el-button @click="editVisible = false">取 消</el-button>
-                <el-button type="primary" @click="saveEdit">确 定</el-button>
-            </span>
-        </el-dialog>
+  <div>
+    <div class="crumbs">
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item>
+          <i class="el-icon-lx-cascades"></i> 用户管理
+        </el-breadcrumb-item>
+      </el-breadcrumb>
     </div>
+    <div class="container">
+      <div class="handle-box">
+        <el-button type="primary" icon="el-icon-delete" class="handle-del mr10" @click="delAllSelection">批量删除</el-button>
+        <el-input v-model="query.name" placeholder="用户名" class="handle-input mr10"></el-input>
+        <el-button type="primary" icon="el-icon-search" @click="handleSearch">搜索</el-button>
+      </div>
+      <el-table :data="userData" border class="table" ref="multipleTable" header-cell-class-name="table-header" @selection-change="handleSelectionChange">
+        <el-table-column type="selection" width="55" align="center"></el-table-column>
+        <el-table-column prop="UserId" label="ID" width="55" align="center"></el-table-column>
+        <el-table-column prop="UserName" label="用户名"></el-table-column>
+        <el-table-column label="性别" align="center" prop="Sex">
+          <template slot-scope="{row: {Sex}}">
+            <span v-if="+Sex === 1">男</span>
+            <span v-else>女</span>
+          </template>
+        </el-table-column>
+        <el-table-column prop="UserTel" label="手机号码"></el-table-column>
+        <el-table-column prop="Password" label="密码"></el-table-column>
+        <el-table-column prop="UserDocType" label="证件类型"></el-table-column>
+        <el-table-column prop="UserDocId" label="证件号"></el-table-column>
+        <el-table-column label="操作" width="180" align="center">
+          <template slot-scope="scope">
+            <el-button type="text" icon="el-icon-edit" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+            <el-button type="text" icon="el-icon-delete" class="red" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <div class="pagination">
+        <el-pagination background layout="total, prev, pager, next" :current-page="query.pageIndex" :page-size="query.pageSize" :total="pageTotal" @current-change="handlePageChange"></el-pagination>
+      </div>
+    </div>
+
+    <!-- 编辑弹出框 -->
+    <el-dialog title="编辑" :visible.sync="editVisible" width="30%">
+      <el-form ref="form" :model="form" label-width="70px">
+        <el-form-item label="用户名">
+          <el-input v-model="form.UserName"></el-input>
+        </el-form-item>
+        <el-form-item label="电话号码">
+          <el-input v-model="form.UserTel"></el-input>
+        </el-form-item>
+        <el-form-item label="密码">
+          <el-input v-model="form.Password"></el-input>
+        </el-form-item>
+        <el-form-item label="证件类型">
+          <el-input v-model="form.UserDocType"></el-input>
+        </el-form-item>
+        <el-form-item label="证件号">
+          <el-input v-model="form.UserDocId"></el-input>
+        </el-form-item>
+
+      </el-form>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="editVisible = false">取 消</el-button>
+        <el-button type="primary" @click="saveEdit">确 定</el-button>
+      </span>
+    </el-dialog>
+  </div>
 </template>
 
 <script>
-import { fetchData } from '../../api/index';
+import { fetchData, SelectUserData } from '../../api/index';
 export default {
     name: 'basetable',
     data() {
@@ -113,6 +79,7 @@ export default {
                 pageIndex: 1,
                 pageSize: 10
             },
+            userData: [],
             tableData: [],
             multipleSelection: [],
             delList: [],
@@ -129,15 +96,15 @@ export default {
     methods: {
         // 获取 easy-mock 的模拟数据
         getData() {
-            fetchData(this.query).then(res => {
-                console.log(res);
-                this.tableData = res.list;
-                this.pageTotal = res.pageTotal || 50;
+            var _this = this;
+            this.$http.post('/selectSomeUser',{UserName:this.query.name}).then(function(res) {
+                console.log(res.data);
+                _this.userData = res.data;
+                _this.pageTotal = res.data.length;
             });
         },
         // 触发搜索按钮
         handleSearch() {
-            this.$set(this.query, 'pageIndex', 1);
             this.getData();
         },
         // 删除操作
@@ -148,7 +115,11 @@ export default {
             })
                 .then(() => {
                     this.$message.success('删除成功');
-                    this.tableData.splice(index, 1);
+                    var param = this.userData.splice(index, 1);
+                    console.log(param)
+                    this.$http.post('/deleteUser', param[0]).then(function(res) {
+                        console.log(res);
+                    });
                 })
                 .catch(() => {});
         },
@@ -157,14 +128,22 @@ export default {
             this.multipleSelection = val;
         },
         delAllSelection() {
+            var _this = this;
             const length = this.multipleSelection.length;
             let str = '';
             this.delList = this.delList.concat(this.multipleSelection);
             for (let i = 0; i < length; i++) {
-                str += this.multipleSelection[i].name + ' ';
+                //从数据库中删除对应的列
+                this.$http.post('/deleteUser', this.multipleSelection[i]).then(function(res) {
+                    console.log(res);
+                    _this.getData();
+                });
+                //this.userData.splice(i, 1);
+                str += this.multipleSelection[i].UserName + ' ';
             }
-            this.$message.error(`删除了${str}`);
+
             this.multipleSelection = [];
+            this.$message.error(`删除了${str}`);
         },
         // 编辑操作
         handleEdit(index, row) {
@@ -176,6 +155,10 @@ export default {
         saveEdit() {
             this.editVisible = false;
             this.$message.success(`修改第 ${this.idx + 1} 行成功`);
+            console.log(this.form);
+            this.$http.post('/updateUser', this.form).then(function(res) {
+                console.log(res);
+            });
             this.$set(this.tableData, this.idx, this.form);
         },
         // 分页导航

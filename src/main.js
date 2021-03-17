@@ -10,6 +10,10 @@ import './assets/css/icon.css';
 import './components/common/directives';
 import 'babel-polyfill';
 
+import axios from 'axios'
+Vue.prototype.$http = axios;
+axios.defaults.baseURL = 'http://localhost:3000';
+
 Vue.config.productionTip = false;
 Vue.use(VueI18n);
 Vue.use(ElementUI, {
