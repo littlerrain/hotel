@@ -7,8 +7,12 @@
           <div class="hotel-type" style="float:left;">
             <span style="color: #999;font-size: 12px;">豪华型</span>
           </div>
-          <span v-if="!this.user" style="float:right;cursor:pointer;" @click="loadin()">登陆</span>
-          <span v-else style="float:right;" >{{this.user.UserName}}</span>
+          <span v-if="!user" style="float:right;cursor:pointer;" @click="loadin()">登陆</span>
+          <div v-else>
+            <span  style="float:right;margin-left:20px;cursor:pointer;" @click="out()">退出</span>
+            <span  style="float:right;">{{user.UserName}}</span>
+          </div>
+
         </div>
         <div style="font-size: 12px;margin-bottom: 10px;">
           <span style="color: #ffc300;">[广东财经大学]</span>
@@ -21,23 +25,15 @@
             <img src="../assets/1.jpg" alt width="1000" height="380" />
           </div>
         </div>
-        <ul
-          style="height:100%;position: relative;width: 35.6%;background: #fff;border: 1px solid #e5e5e5;border-radius: 4px;float: right;"
-        >
-          <li
-            style="height: 115px;margin: 0 20px;border-bottom: 1px solid #e5e5e5;list-style:none;"
-          >
+        <ul style="height:100%;position: relative;width: 35.6%;background: #fff;border: 1px solid #e5e5e5;border-radius: 4px;float: right;">
+          <li style="height: 115px;margin: 0 20px;border-bottom: 1px solid #e5e5e5;list-style:none;">
             <div class="fen">
               <span style="font-size:34px;font-weight:500;padding-right:2px;">4.7</span>分
             </div>
-            <div
-              style="margin-left: 11px;float: left;line-height: 115px;color: #f90;font-size: 16px;"
-            >很好</div>
+            <div style="margin-left: 11px;float: left;line-height: 115px;color: #f90;font-size: 16px;">很好</div>
           </li>
           <li class="li2">
-            <div
-              style="color: #666;line-height: 20px;margin-bottom: 10px;overflow: hidden;text-overflow: ellipsis;word-break: break-all;white-space: nowrap;"
-            >
+            <div style="color: #666;line-height: 20px;margin-bottom: 10px;overflow: hidden;text-overflow: ellipsis;word-break: break-all;white-space: nowrap;">
               <span>2021年开业</span>
               <span>2021年装修</span>
             </div>
@@ -84,7 +80,7 @@
         </ul>
       </div>
     </div>
-    <HelloWorld :message="this.user"/>
+    <HelloWorld :message="this.user" />
   </div>
 </template>
 
@@ -94,23 +90,27 @@ export default {
   name: "app",
   data() {
     return {
-      user:null,
+      user: null
       // 表单验证，需要在 el-form-item 元素中增加 prop 属性
     };
   },
   components: {
     HelloWorld
   },
-  mounted () {
-    if(sessionStorage.getItem("user")){
+  mounted() {
+    if (sessionStorage.getItem("user")) {
+      console.log(sessionStorage.getItem("user"));
       var test = sessionStorage.getItem("user");
-      this.user = JSON.parse(sessionStorage.getItem("user"))
+      this.user = JSON.parse(sessionStorage.getItem("user"));
     }
   },
   methods: {
-    loadin() {
-      this.$router.push('/login')
+    out() {
+      this.user = null;
     },
+    loadin() {
+      this.$router.push("/login");
+    }
   }
 };
 </script>

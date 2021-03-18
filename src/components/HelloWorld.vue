@@ -65,6 +65,7 @@
             </ul>
           </div>
         </li>
+        <li class='showli clear' v-show="!liData.length" style="margin-bottom:20px;">暂无房间，请重新选择日期</li>
       </ul>
     </div>
     <h2 id="info">酒店信息</h2>
@@ -177,6 +178,8 @@ export default {
       
     },
     handleScroll() {
+      const info = document.getElementById('info');
+      
       var scrollTop =
         window.pageYOffset ||
         document.documentElement.scrollTop ||
@@ -186,19 +189,23 @@ export default {
       } else {
         this.showFlag = false;
       }
-      if (scrollTop < 903) {
+      console.log(info.offsetTop,scrollTop)
+      if (scrollTop < info.offsetTop-84) {
         this.showColor = true;
       } else {
         this.showColor = false;
       }
     },
     bookIn(item) {
+      var _this = this;
       if (this.$props.message) {
         const custom = {};
+        custom.orderTime = this.renderTime(new Date());
         custom.Name = this.user.UserName;
-        custom.Tel = this.user.Tel;
+        custom.UserTel = this.user.UserTel;
+        custom.UserDocType= this.user.UserDocType;
         custom.PType = this.user.PType;
-        custom.PId = this.user.PId;
+        custom.UserDocId = this.user.UserDocId;
         custom.Days = this.days;
         custom.Sex = this.user.Sex;
         custom.CType = 1;
@@ -210,9 +217,12 @@ export default {
           .post("/addCustomer", custom)
           .then(function(res) {
             console.log(res);
-            if (!res.data.length) {
+            if (res.data) {
+              _this.$message({ message: "成功", type: "warning" });
             } else {
+              _this.$message({ message: "失败", type: "warning" });
             }
+            
           })
           .catch(error => console.log(error));
       } else {
