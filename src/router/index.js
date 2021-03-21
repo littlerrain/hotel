@@ -20,13 +20,13 @@ export default new Router({
                     meta: { title: '首页' }
                 },
                 {
-                    path: '/icon',
-                    component: () => import(/* webpackChunkName: "icon" */ '../components/page/Icon.vue'),
-                    meta: { title: '自定义图标' }
+                    path: '/room',
+                    component: () => import( '../components/page/Room.vue'),
+                    meta: { title: '房间管理' }
                 },
                 {
-                    path: '/table',
-                    component: () => import(/* webpackChunkName: "table" */ '../components/page/BaseTable.vue'),
+                    path: '/user',
+                    component: () => import( '../components/page/User.vue'),
                     meta: { title: '用户管理' }
                 },
                 {

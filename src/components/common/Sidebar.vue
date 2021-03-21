@@ -62,9 +62,14 @@ export default {
                     title: '首页'
                 },
                 {
-                    icon: 'el-icon-lx-cascades',
-                    index: 'table',
+                    icon: 'el-icon-user',
+                    index: 'user',
                     title: '用户管理'
+                },
+                {
+                    icon: 'el-icon-lx-copy',
+                    index: 'room',
+                    title: '房间管理'
                 },
                 {
                     icon: 'el-icon-lx-copy',
