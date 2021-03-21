@@ -3,7 +3,7 @@
     <el-form ref="registerForm" :model="form" :rules="rules" label-width="80px" class="login-box">
       <h3 class="login-title">欢迎注册</h3>
       <el-form-item label="账号" prop="Tel">
-        <el-input type="text" placeholder="请输入手机号" v-model="form.Tel" />
+        <el-input type="text" placeholder="请输入手机号" v-model="form.UserTel" />
       </el-form-item>
       <el-form-item label="用户名" prop="UserName">
         <el-input type="text" placeholder="请输入用户名" v-model="form.UserName" />
@@ -21,7 +21,7 @@
         <el-input type="password" placeholder="请确认密码" v-model="form.Password2" />
       </el-form-item>
       <el-form-item label="身份证号码" prop="PId">
-        <el-input type="password" placeholder="请输入身份证号码" v-model="form.PId" />
+        <el-input type="password" placeholder="请输入身份证号码" v-model="form.UserDocId" />
       </el-form-item>
       <el-form-item>
         <el-button type="primary" v-on:click="toLogin()">登录</el-button>
@@ -46,21 +46,21 @@ export default {
     };
     return {
       form: {
-        Tel: "",
+        UserTel: "",
         Sex: null,
         Password: "",
         Password2: "",
-        PId: "",
+        UserDocId: "",
         UserName: ""
       },
       // 表单验证，需要在 el-form-item 元素中增加 prop 属性
       rules: {
-        Tel: [{ required: true, message: "账号不可为空", trigger: "blur" }],
+        UserTel: [{ required: true, message: "账号不可为空", trigger: "blur" }],
         Password: [
           { required: true, message: "密码不可为空", trigger: "blur" }
         ],
         Password2: [{ validator: validatePass2, trigger: "blur" }],
-        PId: [
+        UserDocId: [
           { required: true, message: "身份证号码不可为空", trigger: "blur" }
         ],
         UserName: [

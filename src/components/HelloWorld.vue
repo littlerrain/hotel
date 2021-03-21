@@ -189,7 +189,6 @@ export default {
       } else {
         this.showFlag = false;
       }
-      console.log(info.offsetTop,scrollTop)
       if (scrollTop < info.offsetTop-84) {
         this.showColor = true;
       } else {
@@ -199,28 +198,28 @@ export default {
     bookIn(item) {
       var _this = this;
       if (this.$props.message) {
-        const custom = {};
-        custom.orderTime = this.renderTime(new Date());
-        custom.Name = this.user.UserName;
-        custom.UserTel = this.user.UserTel;
-        custom.UserDocType= this.user.UserDocType;
-        custom.PType = this.user.PType;
-        custom.UserDocId = this.user.UserDocId;
-        custom.Days = this.days;
-        custom.Sex = this.user.Sex;
-        custom.CType = 1;
-        custom.RoomNum = item.RoomNum;
-        custom.Indate = this.renderTime(this.value1[0]); //日期格式化
-        custom.Remark = null;
-        console.log(custom);
+        const order = {};
+        order.orderTime = this.renderTime(new Date());
+        order.Name = this.user.UserName;
+        order.UserTel = this.user.UserTel;
+        order.UserDocType= this.user.UserDocType;
+        order.PType = this.user.PType;
+        order.UserDocId = this.user.UserDocId;
+        order.Days = this.days;
+        order.Sex = this.user.Sex;
+        order.CType = 1;
+        order.RoomNum = item.RoomNum;
+        order.Indate = this.renderTime(this.value1[0]); //日期格式化
+        order.Remark = null;
+        console.log(order);
         this.$http
-          .post("/addCustomer", custom)
+          .post("/addOrder", order)
           .then(function(res) {
             console.log(res);
             if (res.data) {
-              _this.$message({ message: "成功", type: "warning" });
+              _this.$message({ message: "预订成功", type: "warning" });
             } else {
-              _this.$message({ message: "失败", type: "warning" });
+              _this.$message({ message: "预订失败", type: "warning" });
             }
             
           })

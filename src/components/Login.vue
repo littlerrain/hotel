@@ -3,7 +3,7 @@
     <el-form ref="loginForm" :model="form" :rules="rules" label-width="80px" class="login-box">
       <h3 class="login-title">欢迎登录</h3>
       <el-form-item label="账号" prop="Tel">
-        <el-input type="text" placeholder="请输入手机号" v-model="form.Tel" />
+        <el-input type="text" placeholder="请输入手机号" v-model="form.UserTel" />
       </el-form-item>
       <el-form-item label="密码" prop="Password">
         <el-input type="password" placeholder="请输入密码" v-model="form.Password" />
@@ -21,12 +21,12 @@ export default {
   data() {
     return {
       form: {
-        Tel: "",
+        UserTel: "",
         Password: ""
       },
       // 表单验证，需要在 el-form-item 元素中增加 prop 属性
       rules: {
-        Tel: [{ required: true, message: "账号不可为空", trigger: "blur" }],
+        UserTel: [{ required: true, message: "账号不可为空", trigger: "blur" }],
         Password: [{ required: true, message: "密码不可为空", trigger: "blur" }]
       },
     };
