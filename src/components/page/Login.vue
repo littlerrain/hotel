@@ -41,7 +41,7 @@ export default {
             this.$refs.login.validate(valid => {
                 if (valid) {
                     this.$http
-                        .post('/selectAdmin', this.param)
+                        .post('/selectUser', this.param)
                         .then(function(res) {
                             console.log(res);
                             if (!res.data.length) {

@@ -8,7 +8,7 @@
             </el-breadcrumb>
         </div>
         <div class="container">
-            <el-tabs v-model="message">
+            <el-tabs v-model="message" @tab-click="handleClick">
                 <el-tab-pane :label="'房间管理'" name="first">
                     <div class="handle-box">
                         <el-button
@@ -128,8 +128,8 @@
                         <el-input v-model="form.Area"></el-input>
                     </el-form-item>
                     <el-form-item label="床类型">
-                        <el-radio v-model="form.Bed" label="0">普通床</el-radio>
-                        <el-radio v-model="form.Bed" label="1">大床</el-radio>
+                        <el-radio v-model="form.Bed" :label="0">普通床</el-radio>
+                        <el-radio v-model="form.Bed" :label="1">大床</el-radio>
                     </el-form-item>
                     <el-form-item label="价格">
                         <el-input v-model="form.Price"></el-input>
@@ -138,10 +138,13 @@
                         <el-radio v-model="form.Broadband" label="0">无</el-radio>
                         <el-radio v-model="form.Broadband" label="1">有</el-radio>
                     </el-form-item>
+                    <el-form-item label="备注">
+                        <el-input v-model="form.Remark"></el-input>
+                    </el-form-item>
                 </el-form>
                 <span slot="footer" class="dialog-footer">
                     <el-button @click="editVisible1 = false">取 消</el-button>
-                    <el-button type="primary" @click="saveEdit">确 定</el-button>
+                    <el-button type="primary" @click="saveEdit1">确 定</el-button>
                 </span>
             </el-dialog>
         </div>
@@ -177,16 +180,23 @@ export default {
     },
     created() {
         this.getData();
-        this.getRoomTypeData();
+        //this.getRoomTypeData();
     },
     methods: {
+        handleClick() {
+            if(this.message == 'first'){
+                this.getData();
+            }else{
+                this.getRoomTypeData();
+            }
+        },
         // 获取 easy-mock 的模拟数据
         getData() {
             var _this = this;
             this.$http.post('/selectSomeRoom', { RoomNum: this.query.id }).then(function(res) {
-                console.log(res.data);
-                _this.roomData = res.data.slice((_this.query.pageIndex - 1) * 10, _this.query.pageIndex * 10);
-                _this.pageTotal = res.data.length;
+                console.log(res.data.data);
+                _this.roomData = res.data.data.slice((_this.query.pageIndex - 1) * 10, _this.query.pageIndex * 10);//封装之后得加两个data不封装，删除其中一个就可以
+                _this.pageTotal = res.data.data.length;
             });
         },
         getRoomTypeData() {
@@ -255,6 +265,11 @@ export default {
         saveEdit1() {
             this.editVisible1 = false;
             this.$message.success(`修改 ${this.form.RoomType} 信息成功`);
+            console.log(this.form)
+            this.$http.post('/updateRoomType', this.form).then(function(res) {
+                console.log(res);
+            });
+            this.getRoomTypeData();
         },
         // 分页导航
         handlePageChange(val) {
