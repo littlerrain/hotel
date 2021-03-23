@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="login">
     <el-form ref="loginForm" :model="form" :rules="rules" label-width="80px" class="login-box">
       <h3 class="login-title">欢迎登录</h3>
       <el-form-item label="账号" prop="Tel">
@@ -68,15 +68,27 @@ export default {
 </script>
 
 <style>
+.login{
+  width: 100%;
+  height: 100%;
+  background-image: url(../assets/login-bg.jpg);
+  background-size: 100%;
+  position: relative;
+  top: 0;
+}
 .login-box {
   border: 1px solid #dcdfe6;
   width: 350px;
   margin: 180px auto;
+  margin-top: 0;
   padding: 35px 35px 15px 35px;
   border-radius: 5px;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   box-shadow: 0 0 25px #909399;
+  background: white;
+    position: relative;
+    top: 180px;
 }
 
 .login-title {
