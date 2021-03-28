@@ -117,28 +117,7 @@ export default {
     data() {
         return {
             name: localStorage.getItem('ms_username'),
-            todoList: [
-                {
-                    title: '今天要清理房间',
-                    status: false
-                },
-                {
-                    title: '今天整理入住情况',
-                    status: false
-                },
-                {
-                    title: '今天提交个人资料',
-                    status: false
-                },
-                {
-                    title: '今天有三个房间需要退房',
-                    status: true
-                },
-                {
-                    title: '今天有三个入住需要办理',
-                    status: true
-                }
-            ],
+            todoList: [],
             data: [
                 {
                     name: '2018/09/04',
@@ -230,10 +209,9 @@ export default {
             return this.name === 'admin' ? '超级管理员' : '普通用户';
         }
     },
-    // created() {
-    //     this.handleListener();
-    //     this.changeDate();
-    // },
+    created() {
+         this.gettodoList()
+    },
     // activated() {
     //     this.handleListener();
     // },
@@ -247,6 +225,31 @@ export default {
             this.data.forEach((item, index) => {
                 const date = new Date(now - (6 - index) * 86400000);
                 item.name = `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+            });
+        },
+        gettodoList(){
+            var _this = this;
+            var userId = localStorage.getItem('ms_userid');
+            this.$http.post('/selectMaster', { UserId: userId }).then(function(res) {
+                console.log(res.data);
+                res.data.forEach(element => {
+                    if (element.masterType == 0) {
+                        element.title = '【个人通知】' + element.masterTitle;
+                    }
+                    if (element.masterType == 1) {
+                        element.title = '【系统通知】' + element.masterTitle;
+                    }
+                    if (element.finishType == 0) {
+                        element.status = false;
+                    }
+                    if (element.finishType == 1) {
+                        element.status = true;
+                    }
+                    if(element.finishType == 2) {
+                        return
+                    }
+                    _this.todoList.push(element)
+                });
             });
         }
         // handleListener() {

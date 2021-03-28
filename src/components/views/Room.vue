@@ -8,8 +8,6 @@
             </el-breadcrumb>
         </div>
         <div class="container">
-            <el-tabs v-model="message" @tab-click="handleClick">
-                <el-tab-pane :label="'房间管理'" name="first">
                     <div class="handle-box">
                         <el-button
                             type="primary"
@@ -45,7 +43,7 @@
                                 <el-button
                                     type="text"
                                     icon="el-icon-edit"
-                                    @click="handleEdit(scope.$index, scope.row,0)"
+                                    @click="handleEdit(scope.$index, scope.row)"
                                 >编辑</el-button>
                             </template>
                         </el-table-column>
@@ -60,46 +58,6 @@
                             @current-change="handlePageChange"
                         ></el-pagination>
                     </div>
-                </el-tab-pane>
-                <el-tab-pane :label="'房间类型管理'" name="second">
-                    <div class="handle-box">
-                        <el-table
-                            :data="roomTypeData"
-                            border
-                            class="table"
-                            ref="multipleTable1"
-                            header-cell-class-name="table-header"
-                        >
-                            <el-table-column prop="RoomTypeId" label="ID" width="55" align="center"></el-table-column>
-                            <el-table-column prop="RoomType" label="房间类型"></el-table-column>
-                            <el-table-column prop="Area" label="房间面积"></el-table-column>
-                            <el-table-column label="房间床位" align="center" prop="Bed">
-                                <template slot-scope="{row: {Bed}}">
-                                    <span v-if="+Bed === 1">大床</span>
-                                    <span v-else>普通床</span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column prop="Price" label="房间价格"></el-table-column>
-                            <el-table-column label="有无宽带" align="center" prop="Broadband">
-                                <template slot-scope="{row: {Broadband}}">
-                                    <span v-if="+Broadband === 1">有宽带</span>
-                                    <span v-else>无宽带</span>
-                                </template>
-                            </el-table-column>
-                            <el-table-column prop="Remark" label="备注"></el-table-column>
-                            <el-table-column label="操作" width="180" align="center">
-                                <template slot-scope="scope">
-                                    <el-button
-                                        type="text"
-                                        icon="el-icon-edit"
-                                        @click="handleEdit(scope.$index, scope.row,1)"
-                                    >编辑</el-button>
-                                </template>
-                            </el-table-column>
-                        </el-table>
-                    </div>
-                </el-tab-pane>
-            </el-tabs>
             <!-- 编辑弹出框 -->
             <el-dialog title="房间信息" :visible.sync="editVisible" width="30%">
                 <el-form ref="form" :model="form" label-width="70px">
@@ -120,31 +78,6 @@
                 <span slot="footer" class="dialog-footer">
                     <el-button @click="editVisible = false">取 消</el-button>
                     <el-button type="primary" @click="saveEdit">确 定</el-button>
-                </span>
-            </el-dialog>
-            <el-dialog title="房间类型信息" :visible.sync="editVisible1" width="30%">
-                <el-form ref="form" :model="form" label-width="70px">
-                    <el-form-item label="面积">
-                        <el-input v-model="form.Area"></el-input>
-                    </el-form-item>
-                    <el-form-item label="床类型">
-                        <el-radio v-model="form.Bed" :label="0">普通床</el-radio>
-                        <el-radio v-model="form.Bed" :label="1">大床</el-radio>
-                    </el-form-item>
-                    <el-form-item label="价格">
-                        <el-input v-model="form.Price"></el-input>
-                    </el-form-item>
-                    <el-form-item label="有无宽带">
-                        <el-radio v-model="form.Broadband" label="0">无</el-radio>
-                        <el-radio v-model="form.Broadband" label="1">有</el-radio>
-                    </el-form-item>
-                    <el-form-item label="备注">
-                        <el-input v-model="form.Remark"></el-input>
-                    </el-form-item>
-                </el-form>
-                <span slot="footer" class="dialog-footer">
-                    <el-button @click="editVisible1 = false">取 消</el-button>
-                    <el-button type="primary" @click="saveEdit1">确 定</el-button>
                 </span>
             </el-dialog>
         </div>
@@ -169,41 +102,22 @@ export default {
             multipleSelection: [],
             delList: [],
             editVisible: false,
-            editVisible1: false,
             pageTotal: 0,
             form: {},
             idx: -1,
             id: -1,
-            message: 'first',
-            roomTypeData: []
         };
     },
     created() {
         this.getData();
-        //this.getRoomTypeData();
     },
     methods: {
-        handleClick() {
-            if(this.message == 'first'){
-                this.getData();
-            }else{
-                this.getRoomTypeData();
-            }
-        },
         // 获取 easy-mock 的模拟数据
         getData() {
             var _this = this;
             this.$http.post('/selectSomeRoom', { RoomNum: this.query.id }).then(function(res) {
-                console.log(res.data.data);
-                _this.roomData = res.data.data.slice((_this.query.pageIndex - 1) * 10, _this.query.pageIndex * 10);//封装之后得加两个data不封装，删除其中一个就可以
-                _this.pageTotal = res.data.data.length;
-            });
-        },
-        getRoomTypeData() {
-            var _this = this;
-            this.$http.post('/selectRoomType').then(function(res) {
-                console.log(res.data);
-                _this.roomTypeData = res.data;
+                _this.roomData = res.data.slice((_this.query.pageIndex - 1) * 10, _this.query.pageIndex * 10);//封装之后得加两个data不封装，删除其中一个就可以
+                _this.pageTotal = res.data.length;
             });
         },
         // 触发搜索按钮
@@ -239,17 +153,11 @@ export default {
             this.$message.error(`停用了${str}`);
         },
         // 编辑操作
-        handleEdit(index, row, show) {
-            if (show == 0) {
+        handleEdit(index, row) {
                 this.idx = index;
                 this.form = row;
                 this.form.StaticShow = this.staticData[this.form.Static];
                 this.editVisible = true;
-            } else {
-                this.idx = index;
-                this.form = row;
-                this.editVisible1 = true;
-            }
         },
         // 保存编辑
         saveEdit() {
@@ -261,15 +169,6 @@ export default {
                 console.log(res);
             });
             this.getData();
-        },
-        saveEdit1() {
-            this.editVisible1 = false;
-            this.$message.success(`修改 ${this.form.RoomType} 信息成功`);
-            console.log(this.form)
-            this.$http.post('/updateRoomType', this.form).then(function(res) {
-                console.log(res);
-            });
-            this.getRoomTypeData();
         },
         // 分页导航
         handlePageChange(val) {

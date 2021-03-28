@@ -49,6 +49,7 @@ export default {
                             } else {
                                  _this.$message.success('登录成功');
                                 localStorage.setItem('ms_username', res.data[0].UserName);
+                                localStorage.setItem('ms_userid', res.data[0].UserId);
                                 _this.$router.push('/');
                             }
                         })

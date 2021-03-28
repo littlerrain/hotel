@@ -7,7 +7,7 @@ export default new Router({
     routes: [
         {
             path: '/',
-            redirect: '/dashboard'
+            redirect: '/home'
         },
         {
             path: '/',
@@ -15,24 +15,44 @@ export default new Router({
             meta: { title: '自述文件' },
             children: [
                 {
-                    path: '/dashboard',
-                    component: () => import(/* webpackChunkName: "dashboard" */ '../components/page/Dashboard.vue'),
+                    path: '/home',
+                    component: () => import(/* webpackChunkName: "dashboard" */ '../components/views/Dashboard.vue'),
                     meta: { title: '首页' }
                 },
                 {
                     path: '/room',
-                    component: () => import( '../components/page/Room.vue'),
+                    component: () => import( '../components/views/Room.vue'),
                     meta: { title: '房间管理' }
                 },
                 {
+                    path: '/roomtype',
+                    component: () => import( '../components/views/RoomType.vue'),
+                    meta: { title: '房间类型管理' }
+                },
+                {
                     path: '/user',
-                    component: () => import( '../components/page/User.vue'),
+                    component: () => import( '../components/views/User.vue'),
                     meta: { title: '用户管理' }
                 },
                 {
+                    path: '/bookingorder',
+                    component: () => import( '../components/views/Order.vue'),
+                    meta: { title: '预订订单管理' }
+                },
+                {
+                    path: '/checkdinorder',
+                    component: () => import( '../components/views/User.vue'),
+                    meta: { title: '入住订单管理' }
+                },
+                {
+                    path: '/checkoutorder',
+                    component: () => import( '../components/views/User.vue'),
+                    meta: { title: '退房订单管理' }
+                },
+                {
                     path: '/tabs',
-                    component: () => import(/* webpackChunkName: "tabs" */ '../components/page/Tabs.vue'),
-                    meta: { title: 'tab选项卡' }
+                    component: () => import(/* webpackChunkName: "tabs" */ '../components/views/Master.vue'),
+                    meta: { title: '待办事项' }
                 },
                 {
                     path: '/form',
@@ -40,52 +60,16 @@ export default new Router({
                     meta: { title: '基本表单' }
                 },
                 {
-                    // 富文本编辑器组件
-                    path: '/editor',
-                    component: () => import(/* webpackChunkName: "editor" */ '../components/page/VueEditor.vue'),
-                    meta: { title: '富文本编辑器' }
-                },
-                {
-                    // markdown组件
-                    path: '/markdown',
-                    component: () => import(/* webpackChunkName: "markdown" */ '../components/page/Markdown.vue'),
-                    meta: { title: 'markdown编辑器' }
-                },
-                {
-                    // 图片上传组件
-                    path: '/upload',
-                    component: () => import(/* webpackChunkName: "upload" */ '../components/page/Upload.vue'),
-                    meta: { title: '文件上传' }
-                },
-                {
                     // vue-schart组件
                     path: '/charts',
                     component: () => import(/* webpackChunkName: "chart" */ '../components/page/BaseCharts.vue'),
-                    meta: { title: 'schart图表' }
-                },
-                {
-                    // 拖拽列表组件
-                    path: '/drag',
-                    component: () => import(/* webpackChunkName: "drag" */ '../components/page/DragList.vue'),
-                    meta: { title: '拖拽列表' }
-                },
-                {
-                    // 拖拽Dialog组件
-                    path: '/dialog',
-                    component: () => import(/* webpackChunkName: "dragdialog" */ '../components/page/DragDialog.vue'),
-                    meta: { title: '拖拽弹框' }
-                },
-                {
-                    // 国际化组件
-                    path: '/i18n',
-                    component: () => import(/* webpackChunkName: "i18n" */ '../components/page/I18n.vue'),
-                    meta: { title: '国际化' }
+                    meta: { title: '统计管理' }
                 },
                 {
                     // 权限页面
                     path: '/permission',
                     component: () => import(/* webpackChunkName: "permission" */ '../components/page/Permission.vue'),
-                    meta: { title: '权限测试', permission: true }
+                    meta: { title: '系统管理', permission: true }
                 },
                 {
                     path: '/404',
@@ -97,16 +81,11 @@ export default new Router({
                     component: () => import(/* webpackChunkName: "403" */ '../components/page/403.vue'),
                     meta: { title: '403' }
                 },
-                {
-                    path: '/donate',
-                    component: () => import(/* webpackChunkName: "donate" */ '../components/page/Donate.vue'),
-                    meta: { title: '支持作者' }
-                }
             ]
         },
         {
             path: '/login',
-            component: () => import(/* webpackChunkName: "login" */ '../components/page/Login.vue'),
+            component: () => import(/* webpackChunkName: "login" */ '../components/views/Login.vue'),
             meta: { title: '登录' }
         },
         {

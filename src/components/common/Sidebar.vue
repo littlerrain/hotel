@@ -58,7 +58,7 @@ export default {
             items: [
                 {
                     icon: 'el-icon-lx-home',
-                    index: 'dashboard',
+                    index: 'home',
                     title: '首页'
                 },
                 {
@@ -69,12 +69,41 @@ export default {
                 {
                     icon: 'el-icon-lx-copy',
                     index: 'room',
-                    title: '房间管理'
+                    title: '房间管理',
+                    subs:[
+                        {
+                            index:'room',
+                            title: '房间管理',
+                        },
+                        {
+                            index:'roomtype',
+                            title: '房间类型管理',
+                        },
+                    ]
+                },
+                {
+                    icon: 'el-icon-user',
+                    index: 'order',
+                    title: '订单管理',
+                    subs:[
+                        {
+                            index: 'bookingorder',
+                            title: '预订订单管理'
+                        },
+                        {
+                            index: 'checkdinorder',
+                            title: '入住订单管理'
+                        },
+                        {
+                            index: 'checkoutorder',
+                            title: '退房订单管理'
+                        },
+                    ]
                 },
                 {
                     icon: 'el-icon-lx-copy',
                     index: 'tabs',
-                    title: 'tab选项卡'
+                    title: '待办事项'
                 },
                 {
                     icon: 'el-icon-lx-calendar',
@@ -85,76 +114,18 @@ export default {
                             index: 'form',
                             title: '基本表单'
                         },
-                        {
-                            index: '3-2',
-                            title: '三级菜单',
-                            subs: [
-                                {
-                                    index: 'editor',
-                                    title: '富文本编辑器'
-                                },
-                                {
-                                    index: 'markdown',
-                                    title: 'markdown编辑器'
-                                }
-                            ]
-                        },
-                        {
-                            index: 'upload',
-                            title: '文件上传'
-                        }
                     ]
-                },
-                {
-                    icon: 'el-icon-lx-emoji',
-                    index: 'icon',
-                    title: '自定义图标'
                 },
                 {
                     icon: 'el-icon-pie-chart',
                     index: 'charts',
-                    title: 'schart图表'
-                },
-                {
-                    icon: 'el-icon-rank',
-                    index: '6',
-                    title: '拖拽组件',
-                    subs: [
-                        {
-                            index: 'drag',
-                            title: '拖拽列表'
-                        },
-                        {
-                            index: 'dialog',
-                            title: '拖拽弹框'
-                        }
-                    ]
-                },
-                {
-                    icon: 'el-icon-lx-global',
-                    index: 'i18n',
-                    title: '国际化功能'
+                    title: '统计管理'
                 },
                 {
                     icon: 'el-icon-lx-warn',
-                    index: '7',
-                    title: '错误处理',
-                    subs: [
-                        {
-                            index: 'permission',
-                            title: '权限测试'
-                        },
-                        {
-                            index: '404',
-                            title: '404页面'
-                        }
-                    ]
+                    index: 'permission',
+                    title: '系统管理',
                 },
-                {
-                    icon: 'el-icon-lx-redpacket_fill',
-                    index: '/donate',
-                    title: '支持作者'
-                }
             ]
         };
     },

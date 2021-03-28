@@ -18,9 +18,11 @@
                 <div class="btn-bell">
                     <el-tooltip
                         effect="dark"
-                        :content="message?`有${message}条未读消息`:`消息中心`"
                         placement="bottom"
                     >
+                        <div slot="content" class="tips-content text-tips-content">
+                            <span>{{message?"有"+message+"条未读消息":"消息中心"}}</span>
+                        </div>
                         <router-link to="/tabs">
                             <i class="el-icon-bell"></i>
                         </router-link>
@@ -53,7 +55,7 @@ export default {
             collapse: false,
             fullscreen: false,
             name: 'linxin',
-            message: 2
+            message: 0,
         };
     },
     computed: {
@@ -62,7 +64,32 @@ export default {
             return username ? username : this.name;
         }
     },
+    created() {
+        var _this = this;
+        // 通过 Event Bus 进行组件间通信，来折叠侧边栏
+        bus.$on('unread', msg => {
+            _this.message = msg;
+        });
+        this.getData();
+    },
+    mounted() {
+        this.getData();
+    },
     methods: {
+        getData() {
+            var _this = this;
+            var userId = localStorage.getItem('ms_userid');
+            var count = 0;
+            this.$http.post('/selectMaster', { UserId: userId }).then(function(res) {
+                res.data.forEach(element => {
+                    if (element.finishType == 0) {
+                        count++;
+                    }
+                });
+                console.log(count);
+                _this.message = count;
+            });
+        },
         // 用户名下拉菜单选择事件
         handleCommand(command) {
             if (command == 'loginout') {
